@@ -246,6 +246,12 @@ button:hover{
 
     <div id="message"></div>
 
+    <audio id="goodSound"
+    src="https://assets.mixkit.co/active_storage/sfx/2000/2000-preview.mp3"></audio>
+
+    <audio id="badSound"
+    src="https://assets.mixkit.co/active_storage/sfx/2955/2955-preview.mp3"></audio>
+
     <img id="fisherman"
     src="https://img.genially.com/6745c9e1b8c72e0015ffbab6/c1aa7cc6-8821-49f1-addf-9d0977322625.gif">
 
@@ -347,6 +353,8 @@ const scoreEl = document.getElementById('score');
 const caughtCountEl = document.getElementById('caughtCount');
 const finalScore = document.getElementById('finalScore');
 const message = document.getElementById('message');
+const goodSound = document.getElementById('goodSound');
+const badSound = document.getElementById('badSound');
 const startScreen = document.getElementById('startScreen');
 const endScreen = document.getElementById('endScreen');
 const speedRange = document.getElementById('speedRange');
@@ -557,7 +565,7 @@ function animate(time){
     allFish.forEach(fish=>{
         if(!fish.el || fish.caught) return;
 
-      fish.x -= fish.speed * speedMultiplier;
+        fish.x -= fish.speed * speedMultiplier;
 
 // лёгкое плавание вверх-вниз
 const wave =
@@ -586,8 +594,14 @@ fish.el.style.top = (fish.y + wave) + 'px';
 
         if(collision){
             if(fish.correct){
+                goodSound.currentTime = 0;
+                goodSound.play();
+
                 processFish(fish, 'Верно! Это исключение', '#00ffff', 1);
             }else{
+                badSound.currentTime = 0;
+                badSound.play();
+
                 processFish(fish, 'Это НЕ исключение', '#ff5edc', -1);
             }
         }else if(rect.right < -30){
