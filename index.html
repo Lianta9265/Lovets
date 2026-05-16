@@ -557,8 +557,14 @@ function animate(time){
     allFish.forEach(fish=>{
         if(!fish.el || fish.caught) return;
 
-        fish.x -= fish.speed * speedMultiplier;
-        fish.el.style.left = fish.x + 'px';
+      fish.x -= fish.speed * speedMultiplier;
+
+// лёгкое плавание вверх-вниз
+const wave =
+    Math.sin((fish.x + fish.y) * 0.02) * 12;
+
+fish.el.style.left = fish.x + 'px';
+fish.el.style.top = (fish.y + wave) + 'px';
 
         const rect = fish.el.getBoundingClientRect();
 
